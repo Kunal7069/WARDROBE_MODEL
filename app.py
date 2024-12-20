@@ -29,7 +29,7 @@ def validate_and_correct_input(manual_input):
     return corrected_input
 
 # API Endpoint for predictions
-@app.route('/predict', methods=['POST'])
+@app.route('/getOutfit', methods=['POST'])
 def predict():
     try:
         # Get JSON data from request
