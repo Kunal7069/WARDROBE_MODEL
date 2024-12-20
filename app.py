@@ -8,18 +8,18 @@ app = Flask(__name__)
 CORS(app)  
 port=5000
 
+# Define input feature names and output target names
+columns_X = ['Outfit', 'Style', 'Belt', 'Watch']
+columns_y = ['Shoes', 'Shirt', 'Pants']
+
+# Load pre-trained models and encoders
+loaded_models = {col: joblib.load(f"{col}_logistic_model.pkl") for col in columns_y}
+loaded_label_encoders_X = {col: joblib.load(f"{col}_encoder.pkl") for col in columns_X}
+loaded_label_encoders_y = {col: joblib.load(f"{col}_output_encoder.pkl") for col in columns_y}
 
 
 # Function to validate and correct manual input
 def validate_and_correct_input(manual_input):
-    # Define input feature names and output target names
-    columns_X = ['Outfit', 'Style', 'Belt', 'Watch']
-    columns_y = ['Shoes', 'Shirt', 'Pants']
-    
-    # Load pre-trained models and encoders
-    loaded_models = {col: joblib.load(f"{col}_logistic_model.pkl") for col in columns_y}
-    loaded_label_encoders_X = {col: joblib.load(f"{col}_encoder.pkl") for col in columns_X}
-    loaded_label_encoders_y = {col: joblib.load(f"{col}_output_encoder.pkl") for col in columns_y}
     corrected_input = {}
     for col, value in manual_input.items():
         # Check if the value matches one of the recognized classes
